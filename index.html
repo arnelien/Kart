@@ -28,8 +28,8 @@
 
 
 var steder = new Array(//elementene er : oppslagstekst, lengdegrad, breddegrad
-			["tom",0.0,0.0],//lar index 0 være tom, for enkelhets skyld i formler
-			["<strong>Pit´n </strong> anno 1970<br>Aursletta",60.22727,11.10976,"black"],
+			["tom",0.0,0.0,"tom"],//lar index 0 være tom, for enkelhets skyld i formler
+			["<strong>Pit´n </strong> anno 1970<br>Aursletta",60.22727,11.10976,"black","black"],
 			["<strong>Samlingspunkt</strong>",60.22644,11.11299],
 			["<strong>Minnesteinen</strong>",60.22592,11.11318,"green"],
 			["<strong>Vekatosøkket</strong><br>(Fastpunkt)",60.2318,11.1156],
@@ -43,7 +43,7 @@ var steder = new Array(//elementene er : oppslagstekst, lengdegrad, breddegrad
 			["<strong>Skolebygningen</strong></br>Trandum leir",60.2111,11.12539,"green"]
 			)
 		for (j=1;j<steder.length;j++){
-		var sted = L.marker([steder[j][1], steder[j][2]], {icon: new L.AwesomeNumberMarkers({number: j, markerColor: steder[j][3] })}).addTo(map);
+		var sted = L.marker([steder[j][1], steder[j][2]], {icon: new L.AwesomeNumberMarkers({number: j, markerColor: steder[j][3],numberColor: steder[j][4] })}).addTo(map);
 		sted.bindPopup(steder[j][0]);
 		}
 // make polyline from an array of LatLng points
