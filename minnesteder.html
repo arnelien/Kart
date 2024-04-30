@@ -94,7 +94,10 @@ imageControl.onAdd = function(map) {
 
     img.src = 'src/images/stedsliste.png'; // URL of your image
     img.style.width = '200px'; // Width of the image
-
+ // Add an event listener to the image
+    img.addEventListener('click', function() {
+        img.style.display = 'none'; // Hide the image when it's clicked
+    });
     return img;
 };
 
