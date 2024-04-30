@@ -19,7 +19,7 @@
 			<div id="map" style="height: 100vh; width: 100vw;"></div>
 <!			<div id="map" style="height: 1400px; width: 1000px;"></div>>
 		<script>
-            var map = L.map('map').setView([60.225,11.12], 15)
+            var map = L.map('map').setView([60.220,11.12], 14)
             L.tileLayer('https://opencache.statkart.no/gatekeeper/gk/gk.open_gmaps?layers=topo4&zoom={z}&x={x}&y={y}', {
                 attribution: '<a href="http://www.kartverket.no/">Kartverket</a>'
             }).addTo(map);
@@ -86,27 +86,20 @@ var trasepunkter =[
 var trase = L.polyline(trasepunkter, {color: 'red',opacity: 0.3, smoothFactor: 0, dashArray: "10 10" }).addTo(map);
 		</script>
 <script>
-	// Create a new control
-let textbox = L.Control.extend({
-    onAdd: function(map) {
-        var text = L.DomUtil.create('div');
-        text.id = "minnestedsliste";
-        return text;
-    },
-  onRemove: function(map) {
-        // Nothing to do here
-   }
-});
+// Create a new control to hold the image
+var imageControl = L.control({position: 'bottomright'});
 
-// Create a new instance of the control and add it to the map
-L.control.textbox = function(opts) {
-    return new L.Control.textbox(opts);
-}
-// Read the text file and add the content to the textbox
-readTextFile('minnestedsliste.txt').then(text => {
-    document.getElementById('minnestedsliste').innerHTML = text;
-)}
-L.control.textbox({ position: 'bottomright' }).addTo(map);
+imageControl.onAdd = function(map) {
+    var img = L.DomUtil.create('img');
+
+    img.src = 'src/images/stedsliste.png'; // URL of your image
+    img.style.width = '200px'; // Width of the image
+
+    return img;
+};
+
+// Add the control to the map
+imageControl.addTo(map);
 
 </script>
 	
