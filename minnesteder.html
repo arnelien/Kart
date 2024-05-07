@@ -54,7 +54,7 @@ var steder = new Array(//elementene er : oppslagstekst, lengdegrad, breddegrad, 
 		sted.bindPopup(steder[j][0]);
 		}
 		var minnesten =  L.marker([60.22592,11.11318], {icon: new L.AwesomeNumberMarkers({number: j, markerColor: "green" })}).addTo(map);
-		minnesten.bindPopup('<img src="src/images/minnestein.jpg" width="350" height="200">'); // Bind a popup to the marker
+		minnesten.bindPopup('<img src="src/images/minnestein.jpg" width="300" height=auto><p>Minnesteinen</p>'); // Bind a popup to the marker
 
 		minnesten.on('mouseover', function (e) { // Add an event listener for the 'mouseover' event
 			this.openPopup(); // Open the popup
