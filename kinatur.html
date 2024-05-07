@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <title>Kinatur  2024</title>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+		<link rel="stylesheet" href="src/leaflet_awesome_number_markers.css" />
+        <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+		<script src="src/leaflet_awesome_number_markers.js"></script>
+    </head>
+    <style>
+	body{
+    padding: 0;
+    margin: 0;
+}
+	</style>
+			<div id="map" style="height: 100vh; width: 100vw;"></div>
+<!			<div id="map" style="height: 1400px; width: 1000px;"></div>>
+	<script>
+
+// Create a map centered at a specific location (here: Beijing, China)
+var map = L.map('map').setView([39.9042, 116.4074], 5);
+
+// Add a tile layer to the map (Carto basemap with Latin letters)
+L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+	 subdomains: 'abcd',
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+//L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+//    maxZoom: 19,
+//    subdomains: 'abc',
+//   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+//L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png', {
+ //   maxZoom: 19,
+ //   subdomains: '1234'
+//L.tileLayer('https://{s}.tile.openmaptiles.org/osm-bright/{z}/{x}/{y}.png', {
+  //  maxZoom: 19,
+    //subdomains: 'abc'
+//}).addTo(map);
+
+map.on('contextmenu', function(e) {
+    var lat = e.latlng.lat;
+    var lng = e.latlng.lng;
+    console.log("[" + lat +","+lng+ "],");
+    L.marker(e.latlng).addTo(map);
+});
+
+// Define locations in China
+var locations = [
+    ["Beijing", 39.9042, 116.4074],
+    ["Shanghai", 31.2304, 121.4737],
+	["Xian",34.15156, 109.02832],
+	["Chengdu",30.425481, 104.106445],
+	["Guilin",24.984499, 110.214844],
+    // Add more locations as needed
+];
+
+// Add markers to the map for each location
+for (var i = 0; i < locations.length; i++) {
+    L.marker([locations[i][1], locations[i][2]]).addTo(map)
+        .bindPopup(locations[i][0]);
+}
+
+var spots=new Array(//elementene er : oppslagstekst, lengdegrad, breddegrad, vidde, bredde,image
+		["tom",0.0,0.0,"tom"],//lar index 0 være tom, for enkelhets skyld i formler
+		["<strong>Den forbudte by</strong>",39.91397492582196,116.39122009277345,300,400,"ForbudteBy"],
+		["<strong>Den store mur<br>Mutianyu</strong>",40.440292169197,116.55970573425294,300,400,"Muren"],
+		["<strong>The Bund</strong>",31.238028, 121.486139,200,,"Bund"],
+		["<strong>Terracotta hæren</strong>",34.385,109.273056,300,,"Terracotta"],
+);
+for (j=1;j<spots.length;j++){
+		var spot = L.marker([spots[j][1], spots[j][2]], {icon: new L.AwesomeNumberMarkers({number: j, markerColor: spots[j][3],numberColor: spots[j][4] })}).addTo(map);
+	//	spot.bindPopup(spots[j][0]);
+		var bilde = "src/Kinaimages/" + spots[j][5]+ ".jpg"
+		spot.bindPopup("<img src='" + bilde + "' alt='Image'  width='"+spots[j][3]+"' heigth=auto><p>"  + spots[j][0] + "</p>"); // Bind a popup to the marker
+ 
+/*		spot.on('mouseover', function (e) { // Add an event listener for the 'mouseover' event
+			this.openPopup(); // Open the popup
+			});
+	
+		spot.on('mouseout', function (e) { // Add an event listener for the 'mouseout' event
+			this.closePopup(); // Close the popup
+			});*/
+		}		
+		</script>
+	<script>
+	//Reiserute:
+	// Define the coordinates for each train stop
+var trainRoute = [
+    [39.9042, 116.4074], // Beijing
+    [38.0428, 114.5149], // Shijiazhuang
+    [34.7466, 113.6254], // Zhengzhou East
+    [34.6197, 112.4540], // Luoyang Longmen
+    [34.4818, 110.0915], // Huashan North
+    [34.5030, 109.5089], // Weinan North
+    [34.377556,108.934083],//Xiang North
+	[30.6311, 104.139]//Chengdu East
+/*	Epanggong
+Huyi
+Foping
+Yangxian West
+Chenggu North
+Hanzhong
+Ningqiang South
+Chaotian
+Guangyuan
+Jianmenguan
+Qingchuan
+Jiangyou North
+Jiangyou
+Mianyang
+Deyang
+Guanghan North */
+];
+
+// Create a polyline and add it to the map
+var polyline = L.polyline(trainRoute, {color: 'red'}).addTo(map);
+
+// Zoom the map to the polyline
+//map.fitBounds(polyline.getBounds());
+
+var flightRoute = [
+    [30.578333, 103.946944],//Chengdu Shuangliu International Airport
+	[25.219444, 110.039444], //Guilin Liangjiang
+	[31.143333, 121.805278] //Shanghai Pudong
+	];
+// Create a polyline and add it to the map
+var polyline = L.polyline(flightRoute, {color: 'blue'}).addTo(map);
+
+// Zoom the map to the polyline
+map.fitBounds(polyline.getBounds());	
+	
+</script>
+    </body>
+</html>
