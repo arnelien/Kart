@@ -119,7 +119,7 @@ Guanghan North */
 var polyline = L.polyline(trainRoute, {color: 'red'}).addTo(map);
 
 // Zoom the map to the polyline
-//map.fitBounds(polyline.getBounds());
+map.fitBounds(polyline.getBounds());
 
 var flightRoute = [
     [30.578333, 103.946944],//Chengdu Shuangliu International Airport
