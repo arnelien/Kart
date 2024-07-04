@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <title>Normandie  2024</title>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+		<link rel="stylesheet" href="src/leaflet_awesome_number_markers.css" />
+        <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+		<script src="src/leaflet_awesome_number_markers.js"></script>
+    </head>
+    <style>
+	body{
+    padding: 0;
+    margin: 0;
+}
+	</style>
+			<div id="map" style="height: 100vh; width: 100vw;"></div>
+
+	<script>
+
+// Create a map centered at a specific location 
+var map = L.map('map').setView([49.460882737062306, -1.3074195473547603], 5);
+
+// Add a tile layer to the map (Carto basemap with Latin letters)
+//L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png', {
+//   maxZoom: 13,
+//	 subdomains: 'abcd',
+//    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	maxZoom: 19,
+   subdomains: 'abc',
+   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+//L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png', {
+ //   maxZoom: 19,
+ //   subdomains: '1234'
+//L.tileLayer('https://{s}.tile.openmaptiles.org/osm-bright/{z}/{32.60937760651736,113.90625x}/{y}.png', {
+  //  maxZoom: 19,
+    //subdomains: 'abc'
+//}).addTo(map);
+
+map.on('contextmenu', function(e) {
+    var lat = e.latlng.lat;
+    var lng = e.latlng.lng;
+    console.log("[" + lat +","+lng+ "],");
+    L.marker(e.latlng).addTo(map);
+});
+
+// Define locations in Normandie
+var locations = [
+	["Exceter",50.73417848732645, -3.4153608219477185],
+];
+
+// Add markers to the map for each location
+for (var i = 0; i < locations.length; i++) {
+    L.marker([locations[i][1], locations[i][2]]).addTo(map)
+        .bindPopup(locations[i][0]);
+}
+
+var drops=new Array(//elementene er : oppslagstekst, lengdegrad, breddegrad, vidde, bredde,image
+		["tom",0.0,0.0,"tom"],//lar index 0 være tom, for enkelhets skyld i formler
+		["<strong>Upottery airfield</strong>",50.88622584556832, -3.155963969842112,300,400,"Upottery.jpg"],
+		["<strong>5 juni Azeville</strong>",49.460882737062306, -1.3074195473547603,300,400,"Azeville.jpg"],
+		["<strong>7 Juni Mont St Michel</strong>",48.61611552824078,-1.4990758895874023,300,400,"StMichel.jpg"],
+		["<strong>9 Juni DZ La Fière</strong>",49.40537204153067, -1.3600056691478766,300,400,"LaFiere.jpg"],
+//		["<strong></strong>",,300,400,""],
+	);
+for (j=1;j<drops.length;j++){
+		var drop = L.marker([drops[j][1], drops[j][2]], {icon: new L.AwesomeNumberMarkers({number: j, markerColor: "black",numberColor: drops[j][4] })}).addTo(map);
+		drop.bindPopup(drops[j][0]);
+		var bilde = "src/Normandie/" + drops[j][5]
+		drop.bindPopup("<img src='" + bilde + "' alt='Image'  width='"+drops[j][3]+"' heigth=auto><p>"  + drops[j][0] + "</p>"); // Bind a popup to the marker
+}
+var spots=new Array(//elementene er : oppslagstekst, lengdegrad, breddegrad, iconfarge
+		["tom",0.0,0.0,"tom"],//lar index 0 være tom, for enkelhets skyld i formler
+		["<strong>Cherbourg flyplass</strong>",49.64673787270076,-1.4766311645507815,],
+		["<strong>Exceter flyplass</strong>",50.73417848732645, -3.4153608219477185,],
+		["<strong>Dinard (LFRD) flyplass</strong>",48.58464454743402,-2.0805358886718754],
+		["<strong>Villons-les-Buissons<br>krans. Norsk Spitfire ving drev flyplassen i 1944</strong>",49.2355,-0.4125, "blue"],
+		["<strong>Hermanville sur Mer<br>Place du Cuirassé Courbet<br>Monument Orlogsgast + Svenners anker</strong>",49.297463, -0.302628,"blue","Hermannville.jpg"],
+		["<strong>Osmanville<br>Lancaster monumentet</strong>",49.337986, -1.099404,"blue"],
+//		["<strong></strong>",,300,400,""],
+	);
+for (j=1;j<spots.length;j++){
+		var spot = L.marker([spots[j][1], spots[j][2]], {icon: new L.AwesomeNumberMarkers({number: j, markerColor: spots[j][3] })}).addTo(map);
+	//	spot.bindPopup(spots[j][0]);
+		var bilde = "src/Normandie/" + spots[j][6]+ ".jpg";
+		if (spots[j][4]!= "undefined" ){var visBilde='' //'<img src=" + bilde + "' alt='Image'  width='"+spots[j][5]+"' heigth=auto>';
+		}
+		spot.bindPopup(spots[j][0]); // Bind a popup to the marker
+ 
+/*		spot.on('mouseover', function (e) { // Add an event listener for the 'mouseover' event
+			this.openPopup(); // Open the popup
+			});
+	
+		spot.on('mouseout', function (e) { // Add an event listener for the 'mouseout' event
+			this.closePopup(); // Close the popup
+			});*/
+		}		
+		</script>
+	<script>
+	
+// Create a new control to hold an image
+var imageControl = L.control({position: 'bottomright'});
+
+imageControl.onAdd = function(map) {
+    var img = L.DomUtil.create('img');
+
+    img.src = 'src/Normandie/stedsliste.png'; // URL of your image
+    img.style.width = '200px'; // Width of the image
+ // Add an event listener to the image
+    img.addEventListener('click', function() {
+        img.style.display = 'none'; // Hide the image when it's clicked
+    });
+    return img;
+};
+
+// Add the control to the map
+imageControl.addTo(map);
+
+/*
+//lag flyplassikon:
+var airportIcon = L.icon({
+iconUrl: 'src/Kinaimages/flyplass.png',
+//shadowUrl: 'icon-shadow.png',
+iconSize: [40, 30], // size of the icon
+//shadowSize: [50, 64], // size of the shadow
+iconAnchor: [40, 30], // point of the icon which will correspond to marker's location
+//shadowAnchor: [4, 62], // the same for the shadow
+popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+});	
+L.marker([28.13985662083043,106.61132812500001], {icon: airportIcon}).addTo(map);
+
+var airportIconNO = L.icon({
+iconUrl: 'src/Kinaimages/flyplassNO.png',
+iconSize: [40, 30],
+iconAnchor: [0, 10],
+popupAnchor: [-3, -76] 
+});	
+L.marker([27.55732757499684,114.43359375000001], {icon: airportIconNO}).addTo(map);
+*/
+map.setView(new L.LatLng(49.460882737062306, -1.3074195473547603), 10);
+
+</script>
+    </body>
+</html>
