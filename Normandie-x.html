@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <title>D-dag  2024</title>
+        <style type="text/css">
+			html, body { height: 100%; margin: 0; padding: 0; }
+			#map_canvas { height: 100%; }
+		</style>
+	<script>
+    function loadScript() {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCo2MqEjoLnG6jfqiz9zRjm5Km-gJ3TmRU&loading=async&callback=initialize";
+      document.body.appendChild(script);
+    }
+  </script>
+		
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+		<link rel="stylesheet" href="src/leaflet_awesome_number_markers.css" />
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+		<script src="src/leaflet_awesome_number_markers.js"></script>
+</head>
+<!--		<script async 
+		defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCo2MqEjoLnG6jfqiz9zRjm5Km-gJ3TmRU&loading=async&callback=initMap"></script>
+-->
+	
+<body onload="loadScript()">
+  <div id="map_canvas" style="width: 100%; height: 100%"></div>
+	<script type="text/javascript">
+		function initialize() {
+		var latlng = new google.maps.LatLng(49.63428290509648, -1.6181386899379873);
+		var myOptions = {
+        zoom: 8,
+        center: latlng,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+      var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+	      };
+ </script>
+<script>
+
+/*
+	google.maps.event.addListener(map,'rightclick', function(e) {
+		var lat = e.latLng.lat();
+		var lng = e.latLng.lng();
+		console.log("[" + lat +","+lng+ "],");
+   new google.maps.Marker({
+    position: e.latLng,
+    map: map,
+  });	
+});  
+*/
+	var localMarkers=L.marker([49.46007,1.3065]);
+	
+// Assuming 'map' is your Leaflet Map instance and 'marker' is the marker instance
+	let marker=localMarkers;
+	marker.addTo(map);
+
+ marker.on('click', function(e) {
+    // Set the zoom level to a suitable value, say 8
+    map.setZoom(7);
+    // Center the map to the marker position
+    map.panTo(marker.getLatLng());
+
+    // Now, you can add local markers for the visible area
+    // Let's assume 'localMarkers' is an array of your local markers
+   for (var i = 0; i < localMarkers.length; i++) {
+        // Check if the local marker is in the current map bounds
+        if (map.getBounds().contains(localMarkers[i].getLatLng())) {
+            // If yes, add the marker to the map
+            localMarkers[i].addTo(map);
+        } else {
+            // If not, remove the marker from the map
+            map.removeLayer(localMarkers[i]);
+        }
+    }
+});
+
+</script>
+</body>
+
+</html>
+

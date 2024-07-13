@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <title>Kinatur  2024</title>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+		<link rel="stylesheet" href="src/leaflet_awesome_number_markers.css" />
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+		<script src="src/leaflet_awesome_number_markers.js"></script>
+    </head>
+    <style>
+	body{
+    padding: 0;
+    margin: 0;
+}
+	</style>
+			<div id="map" style="height: 100vh; width: 100vw;"></div>
+
+	<script>
+
+// Create a map centered at a specific location (here: Beijing, China)
+var map = L.map('map').setView([39.9042, 116.4074], 5);
+
+// Add a tile layer to the map (Carto basemap with Latin letters)
+L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png', {
+    maxZoom: 13,
+	 subdomains: 'abcd',
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+}).addTo(map);
+
+map.on('contextmenu', function(e) {
+    var lat = e.latlng.lat;
+    var lng = e.latlng.lng;
+    console.log("[" + lat +","+lng+ "],");
+    L.marker(e.latlng).addTo(map);
+});
+
+// Define locations in China
+var locations = [
+    ["Beijing", 39.9042, 116.4074],
+    ["Shanghai", 31.2304, 121.4737],
+	["Xian",34.15156, 109.02832],
+	["Chengdu",30.425481, 104.106445],
+	["Guilin",25.270453, 110.292158]
+];
+const towns =new L.featureGroup();
+// Add markers to the map for each location
+for (var i = 0; i < locations.length; i++) {
+    L.marker([locations[i][1], locations[i][2]]).addTo(towns)
+ //      .bindPopup(locations[i][0])
+;}
+towns.addTo(map);
+// Calculate the bounds
+const bounds = towns.getBounds();
+// Fit the map to the bounds
+map.fitBounds(bounds);
+/*
+for (var i = 0; i < locations.length; i++) {
+towns[i].on('click', function(e) {
+    // Set the zoom level to a suitable value, say 8
+    map.setZoom(8);
+    // Center the map to the marker position
+    map.panTo(towns[i].getLatLng());
+	;}
+*/
+towns.forEach(function(marker) {
+featureGroup.addLayer(marker);
+marker.bindPopup('Hello, I am a layer within a FeatureGroup.');
+}; 
+</script>
+    </body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <title>Kinatur  2024</title>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+		<link rel="stylesheet" href="src/leaflet_awesome_number_markers.css" />
+        <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+		<script src="src/leaflet_awesome_number_markers.js"></script>
+    </head>
+    <style>
+	body{
+    padding: 0;
+    margin: 0;
+}
+	</style>
+			<div id="map" style="height: 100vh; width: 100vw;"></div>
+
+	<script>
+
+// Create a map centered at a specific location (here: Beijing, China)
+var map = L.map('map').setView([39.9042, 116.4074], 5);
+
+// Add a tile layer to the map (Carto basemap with Latin letters)
+L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png', {
+    maxZoom: 13,
+	 subdomains: 'abcd',
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+//L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+//    maxZoom: 19,
+//    subdomains: 'abc',
+//   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+//L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png', {
+ //   maxZoom: 19,
+ //   subdomains: '1234'
+//L.tileLayer('https://{s}.tile.openmaptiles.org/osm-bright/{z}/{32.60937760651736,113.90625x}/{y}.png', {
+  //  maxZoom: 19,
+    //subdomains: 'abc'
+//}).addTo(map);
+
+map.on('contextmenu', function(e) {
+    var lat = e.latlng.lat;
+    var lng = e.latlng.lng;
+    console.log("[" + lat +","+lng+ "],");
+    L.marker(e.latlng).addTo(map);
+});
+
+// Define locations in China
+var locations = [
+    ["Beijing", 39.9042, 116.4074],
+    ["Shanghai Pudong", 31.143333, 121.805278],
+	["Xian Stasjon Nord",34.15156, 109.02832],
+	["Chengdu Shuangliu Int. Airport",30.578333, 103.946944],
+	["Guilin Liangjiang Airport",25.219444, 110.039444],
+];
+
+// Add markers to the map for each location
+for (var i = 0; i < locations.length; i++) {
+    L.marker([locations[i][1], locations[i][2]]).addTo(map)
+        .bindPopup(locations[i][0]);
+}
+
+// Hoteller
+//var hoteller = [
+/*    ["Beijing", 39.9042, 116.4074],
+    ["Shanghai Pudong", 31.143333, 121.805278],
+	["Xian Stasjon Nord",34.15156, 109.02832],
+	["Chengdu Shuangliu Int. Airport",30.578333, 103.946944],
+	["Guilin Liangjiang Airport",25.219444, 110.039444],
+	["<strong>Shanghai Jinjiang Tower</strong>",31.222307, 121.458299,300,400,"ShanghaiHotell"],
+];
+
+
+// Add markers to the map for each location
+for (var i = 0; i < hoteller.length; i++) {
+    L.marker([hoteller[i][1], hoteller[i][2]],{icon: new L.AwesomeNumberMarkers({markerColor: "Green"}))}.addTo(map)
+        .bindPopup(hoteller[i][0])
+		var bilde = "src/Kinaimages/" + hoteller[i][5]+ ".jpg"
+		this.bindPopup("<img src='" + bilde + "' alt='Image'  width='"+hoteller[i][3]+"' heigth=auto><p>"  + hoteller[i][0] + "</p>"); // Bind a popup to the marker
+ ;
+}
+*/
+
+
+
+var spots=new Array(//elementene er : oppslagstekst, lengdegrad, breddegrad, vidde, bredde,image
+		["tom",0.0,0.0,"tom"],//lar index 0 være tom, for enkelhets skyld i formler
+		["<strong>Den forbudte by</strong>",39.91397492582196,116.39122009277345,300,400,"ForbudteBy"],
+		["<strong>Sommerpalasset</strong>",39.9975, 116.2689,300,400,"Sommerpalasset"],
+		["<strong>Den store mur<br>Mutianyu</strong>",40.440292169197,116.55970573425294,300,400,"Muren"],
+		["<strong>Hutongene</strong>",39.937,116.388,300,400,"Rickshaw"],
+		["<strong>Terracotta hæren</strong>",34.385,109.273056,300,,"Terracotta"], //Xian
+		["<strong>Bymuren i Xian</strong>",34.254,108.942,300,400,"Bymuren"],
+		["<strong>Tang Show</strong>",34.231,108.931,300,400,"TangShow"],
+		["<strong>Muslim kvartér</strong>",34.265,108.938,300,400,"MuslimKvarter"],
+		["<strong>Great Wild Goose Pagoda</strong>",34.219842, 108.959354,300,400,"Pagode"],
+		["<strong>Giant Buddah</strong>",29.547,103.768,300,400,"Buddah"], //Chengdu
+		["<strong>Pandapark</strong>",30.739,104.141,300,400,"Pandaturister"],
+		["<strong>Elvecruise</strong>",24.930,110.483,300,400,"Elva"], //Guilin
+		["<strong>Yangshuo by</strong>",24.777,110.489,300,400,"Yangshuo"],
+		["<strong>Gammel landsby</strong>",24.788,110.427,300,400,"Landsby"],
+		["<strong>Middag på landet</strong>",24.790,110.419,300,400,"Picnic"],
+		["<strong>Trunk Elephant</strong>",25.270453, 110.292158,300,400,"TrunkElephant"],
+		["<strong>Reed Flute Cave</strong>",25.304316925094476, 110.27403270065706,300,400,"Grotte"],
+		["<strong>Gamlebyen</strong>",31.228873, 121.488012,300,400,"Gamlebyen"], //Shanghai
+		["<strong>Shanghai Jinjiang Tower</strong>",31.222307, 121.458299,500,600,"ShanghaiHotell"],
+		["<strong>The Bund</strong>",31.238028, 121.486139,200,,"Bund"],
+		["<strong>Peace Hotel</strong>",31.241083, 121.484583,300,400,"PeaceHotel"],
+		["<strong>Siste lunsj</strong>",31.236562, 121.533903,300,400,"SisteLunsj"],
+		);
+//		["<strong></strong>",,300,400,""],
+//		["<strong></strong>",,300,400,""],
+//		["<strong></strong>",,300,400,""],
+
+for (j=1;j<spots.length;j++){
+		var spot = L.marker([spots[j][1], spots[j][2]], {icon: new L.AwesomeNumberMarkers({number: j, markerColor: spots[j][3],numberColor: spots[j][4] })}).addTo(map);
+	//	spot.bindPopup(spots[j][0]);
+		var bilde = "src/Kinaimages/" + spots[j][5]+ ".jpg"
+		spot.bindPopup("<img src='" + bilde + "' alt='Image'  width='"+spots[j][3]+"' heigth=auto><p>"  + spots[j][0] + "</p>"); // Bind a popup to the marker
+ 
+/*		spot.on('mouseover', function (e) { // Add an event listener for the 'mouseover' event
+			this.openPopup(); // Open the popup
+			});
+	
+		spot.on('mouseout', function (e) { // Add an event listener for the 'mouseout' event
+			this.closePopup(); // Close the popup
+			});*/
+		}		
+		</script>
+	<script>
+	//Reiserute:
+	// Define the coordinates for each train stop
+var trainRoute = [
+    [39.9042, 116.4074], // Beijing
+    [38.0428, 114.5149], // Shijiazhuang
+    [34.7466, 113.6254], // Zhengzhou East
+    [34.6197, 112.4540], // Luoyang Longmen
+    [34.4818, 110.0915], // Huashan North
+    [34.5030, 109.5089], // Weinan North
+    [34.377556,108.934083],//Xiang North
+	[34.2712527,108.7516022], //Epanggong
+	[34.0808,108.6758], //Huyi
+	[33.5006,107.9790], //Foping
+	[33.2290,107.5185], //Yangxian West
+	[33.1860,107.3015], //Chenggu North
+	[33.0928,107.0257], //Hanzhong
+	[32.8230,106.2846], //Ningqiang South
+	[32.7069,106.0689], //Chaotian
+	[32.4524,105.8182], //Guangyuan
+	[32.2834,105.4811], //Jianmenguan
+	[32.1877,105.3302], //Qingchuan
+	[31.9852,105.0724], //Jiangyou North
+	[31.7835,104.7677], //Jiangyou
+	[31.4620,104.7147], //Mianyang
+	[31.1684,104.3869], //Deyang
+	[31.0115,104.2731], //Guanghan North	
+	[30.6311, 104.139]//Chengdu East
+];
+
+// Create a polyline and add it to the map
+var polyline = L.polyline(trainRoute, {color: 'red'}).addTo(map);
+
+//Flystrekk:
+var flightRoute = [
+    [30.578333, 103.946944],//Chengdu Shuangliu International Airport
+	[25.219444, 110.039444], //Guilin Liangjiang
+	[31.143333, 121.805278] //Shanghai Pudong
+	];
+// Create a polyline and add it to the map
+var polyline = L.polyline(flightRoute, {color: 'blue'}).addTo(map);
+
+// Zoom the map to the polyline
+// map.fitBounds(polyline.getBounds());
+
+//lag flyplassikon:
+var airportIcon = L.icon({
+iconUrl: 'src/Kinaimages/flyplass.png',
+iconSize: [40, 30], // size of the icon
+iconAnchor: [40, 30], // point of the icon which will correspond to marker's location
+popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+});	
+L.marker([28.13985662083043,106.61132812500001], {icon: airportIcon}).addTo(map);
+
+var airportIconNO = L.icon({
+iconUrl: 'src/Kinaimages/flyplassNO.png',
+iconSize: [40, 30],
+iconAnchor: [0, 10],
+popupAnchor: [-3, -76] 
+});	
+L.marker([27.55732757499684,114.43359375000001], {icon: airportIconNO}).addTo(map);
+
+map.setView(new L.LatLng(31.701192374711393,113.37890625000001), 5);
+</script>
+    </body>
+</html>

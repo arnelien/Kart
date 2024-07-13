@@ -1,0 +1,56 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <title>Trandum/Aursletta</title>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+		<link rel="stylesheet" href="src/leaflet_awesome_number_markers.css" />
+        <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+		<script src="src/leaflet_awesome_number_markers.js"></script>
+    </head>
+    <style>
+	body{
+    padding: 0;
+    margin: 0;
+}
+</style>
+
+import { MapContainer, TileLayer } from "react-leaflet";
+import { bounds, Proj } from "leaflet";
+
+// create offset in case you want to adjust the map
+const offset = { x: 40, y: -210 };
+
+// create custom CRS for Baidu maps
+const baiduCRS = new Proj.CRS(
+  "EPSG:3395",
+  `+proj=merc +lon_0=0 +k=1 +x_0=${offset.x}  +y_0=${offset.y}  +datum=WGS84 +units=m +no_defs`,
+  {
+    resolutions: [262144, 131072, 65536, 32768, 16384, 8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1],
+    origin: [0, 0],
+    bounds: bounds([20037508.342789244, 0], [0, 20037508.342789244]),
+  }
+);
+
+function App() {
+  return (
+    <div>
+      <MapContainer
+        style={{ height: "100vh", width: "100%" }}
+        crs={baiduCRS}
+        center={[31.432026740690574, 120.8439179532812]}
+        zoom={8}
+      >
+        <TileLayer
+          url="https://maponline{s}.bdimg.com/onlinelabel/?qt=tile&x={x}&y={y}&z={z}&styles=pl"
+          subdomains={["0", "1", "2", "3"]}
+          maxNativeZoom={18}
+          minNativeZoom={3}
+          tms
+        />
+      </MapContainer>
+    </div>
+  );
+}
+
+export default App;
