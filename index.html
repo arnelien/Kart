@@ -19,10 +19,41 @@
 			<div id="map" style="height: 100vh; width: 100vw;"></div>
 <!			<div id="map" style="height: 1400px; width: 1000px;"></div>>
 		<script>
-            var map = L.map('map').setView([60.23,11.11], 16)
-            L.tileLayer('https://opencache.statkart.no/gatekeeper/gk/gk.open_gmaps?layers=topo4&zoom={z}&x={x}&y={y}', {
-                attribution: '<a href="https://kartverket.no/geos/basiskart:/">Kartverket</a>'
-            }).addTo(map);
+            var topo = L.tileLayer(
+    'https://cache.kartverket.no/v1/wmts/1.0.0/topo/default/webmercator/{z}/{y}/{x}.png',
+    {
+        attribution: '&copy; Kartverket'
+    }
+);
+
+var gråtone = L.tileLayer(
+    'https://cache.kartverket.no/v1/wmts/1.0.0/topograatone/default/webmercator/{z}/{y}/{x}.png',
+    {
+        attribution: '&copy; Kartverket'
+    }
+);
+var esriSat = L.tileLayer(
+    'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    {
+        attribution: 'Esri'
+    }
+);
+var map = L.map('map', {
+    center: [60.23, 11.11],
+    zoom: 14,
+    layers: [topo]
+});
+
+var baseMaps = {
+    "Topografisk": topo,
+    "Gråtone": gråtone,
+    "Satellitt": esriSat
+
+	
+};
+
+L.control.layers(baseMaps).addTo(map);
+
         </script>
 		<script>
 
