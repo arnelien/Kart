@@ -25,13 +25,6 @@
         attribution: '&copy; Kartverket'
     }
 );
-
-var gråtone = L.tileLayer(
-    'https://cache.kartverket.no/v1/wmts/1.0.0/topograatone/default/webmercator/{z}/{y}/{x}.png',
-    {
-        attribution: '&copy; Kartverket'
-    }
-);
 var esriSat = L.tileLayer(
     'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
     {
@@ -46,7 +39,6 @@ var map = L.map('map', {
 
 var baseMaps = {
     "Topografisk": topo,
-    "Gråtone": gråtone,
     "Satellitt": esriSat
 
 	
