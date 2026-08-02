@@ -61,7 +61,6 @@ var steder = new Array(//elementene er : oppslagstekst, breddegrad, lengdegrad, 
 			["<strong>Hoppetårnet</strong>",60.21341, 11.11413],
 			["<strong>Skolebygningen</strong></br>Trandum leir",60.2111,11.12539,"green"],
 			["<strong>Veteranhuset</strong></br>Trandum leir",60.2098593,11.1310127,"green"],
-			["<strong>Minnesteinen</strong>",60.22592,11.11318,"green"],
 			["<strong>Vekatosøkket</strong><br>(Fastpunkt)",60.2318,11.1156],
 			["<strong>Stridsvognvrak</strong><br>(tilnærmet lokalitet)",60.21901, 11.10532],
 			["<strong>Tankskytebanen</strong><br> (fastpunkt)",60.22068, 11.11702]
@@ -70,7 +69,7 @@ var steder = new Array(//elementene er : oppslagstekst, breddegrad, lengdegrad, 
 		var sted = L.marker([steder[j][1], steder[j][2]], {icon: new L.AwesomeNumberMarkers({number: j, markerColor: steder[j][3],numberColor: steder[j][4] })}).addTo(map);
 		sted.bindPopup(steder[j][0]);
 		}
-		var minnesten =  L.marker([60.22592,11.11318], {icon: new L.AwesomeNumberMarkers({number: j, markerColor: "green" })}).addTo(map);
+		var minnesten =  L.marker([60.22592,11.11318], {icon: new L.AwesomeNumberMarkers({number: 10, markerColor: "green" })}).addTo(map);
 		minnesten.bindPopup('<img src="src/images/minnestein.jpg" width="300" height=auto><p>Minnesteinen</p>'); // Bind a popup to the marker
 
 		minnesten.on('mouseover', function (e) { // Add an event listener for the 'mouseover' event
