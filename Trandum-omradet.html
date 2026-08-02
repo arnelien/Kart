@@ -61,9 +61,9 @@ var steder = new Array(//elementene er : oppslagstekst, breddegrad, lengdegrad, 
 			["<strong>Hoppetårnet</strong>",60.21341, 11.11413],
 			["<strong>Skolebygningen</strong></br>Trandum leir",60.2111,11.12539,"green"],
 			["<strong>Veteranhuset</strong></br>Trandum leir",60.2098593,11.1310127,"green"],
-			["<strong>Vekatosøkket</strong><br>(Fastpunkt)",60.2318,11.1156],
-			["<strong>Stridsvognvrak</strong><br>(tilnærmet lokalitet)",60.21901, 11.10532],
-			["<strong>Tankskytebanen</strong><br> (fastpunkt)",60.22068, 11.11702]
+			//["<strong>Vekatosøkket</strong><br>(Fastpunkt)",60.2318,11.1156],
+			//["<strong>Stridsvognvrak</strong><br>(tilnærmet lokalitet)",60.21901, 11.10532],
+			//["<strong>Tankskytebanen</strong><br> (fastpunkt)",60.22068, 11.11702]
 			)
 		for (j=1;j<steder.length;j++){
 		var sted = L.marker([steder[j][1], steder[j][2]], {icon: new L.AwesomeNumberMarkers({number: j, markerColor: steder[j][3],numberColor: steder[j][4] })}).addTo(map);
