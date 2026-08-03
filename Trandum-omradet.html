@@ -81,13 +81,13 @@ var steder = new Array(//elementene er : oppslagstekst, breddegrad, lengdegrad, 
 			});
 */
 			["<strong>Minnesteinen</strong>",60.22592,11.11318,"green",,300,400,"src/images/minnestein.jpg"
-			//["<strong>Vekatosøkket</strong><br>(Fastpunkt)",60.2318,11.1156],
+			["<strong>Vekatosøkket</strong><br>(Fastpunkt)",60.2318,11.1156],
 			//["<strong>Stridsvognvrak</strong><br>(tilnærmet lokalitet)",60.21901, 11.10532],
 			//["<strong>Tankskytebanen</strong><br> (fastpunkt)",60.22068, 11.11702]
 			)
 		for (j=1;j<steder.length;j++){
 		var sted = L.marker([steder[j][1], steder[j][2]], {icon: new L.AwesomeNumberMarkers({number: j, markerColor: steder[j][3],numberColor: steder[j][4] })}).addTo(map);
-		sted.bindPopup('<img src=steder[j][7]) with=([j][7]) height=auto><p>steder[j][0]</p>');
+	//	sted.bindPopup('<img src=steder[j][7]) with=([j][7]) height=auto><p>steder[j][0]</p>');
 		}
 			
 // make polyline from an array of LatLng points
