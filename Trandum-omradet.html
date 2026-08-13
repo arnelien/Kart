@@ -1,4 +1,4 @@
-﻿
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -19,7 +19,7 @@
 			<div id="map" style="height: 100vh; width: 100vw;"></div>
 <!--		<div id="map" style="height: 1400px; width: 1000px;"></div> -->
 		<script>
-            var topo = L.tileLayer(
+ var topo = L.tileLayer(
     'https://cache.kartverket.no/v1/wmts/1.0.0/topo/default/webmercator/{z}/{y}/{x}.png',
     {
         attribution: '&copy; Kartverket'
@@ -53,7 +53,7 @@ L.control.layers(baseMaps).addTo(map);
 var steder = new Array(//elementene er : oppslagstekst, breddegrad, lengdegrad, evnt markørfarge, tallfarge
 			["tom",0.0,0.0,"tom"],//lar index 0 være tom, for enkelhets skyld i formler
 			["<strong>Pit´n </strong><br>anno 1970",60.22727,11.10976,"black","black"],
-			["<strong>Samlingspunkt</strong>",60.22644,11.11299],
+			["<strong>Samlingspunkt</strong><br>Minnesteinen",60.22589,11.11318],
 			["<strong>Flystripa</strong><br>(Start NØ)",60.22585,11.11483],
 			["<strong>Flystripa</strong><br>(Enden SV)",60.22209, 11.10569],
 			["<strong>Minnebauta</strong><br>Trandumskogen",60.21892,11.11799,,],
@@ -66,10 +66,10 @@ var steder = new Array(//elementene er : oppslagstekst, breddegrad, lengdegrad, 
 			//["<strong>Tankskytebanen</strong><br> (fastpunkt)",60.22068, 11.11702]
 			)
 		for (j=1;j<steder.length;j++){
-		var sted = L.marker([steder[j][1], steder[j][2]], {icon: new L.AwesomeNumberMarkers({number: j, markerColor: steder[j][3],numberColor: steder[j][4] })}).addTo(map);
+		var sted = L.marker([steder[j][1], steder[j][2]], {icon: new L.AwesomeNumberMarkers({number: j, markerColor: steder[j][3] })}).addTo(map);
 		sted.bindPopup(steder[j][0]);
 		}
-		var minnesten =  L.marker([60.22592,11.11318], {icon: new L.AwesomeNumberMarkers({number: 10, markerColor: "green" })}).addTo(map);
+		var minnesten =  L.marker([60.22592,11.11318], {icon: new L.AwesomeNumberMarkers({markerColor: "green" })}).addTo(map);
 		minnesten.bindPopup('<img src="src/images/minnestein.jpg" width="300" height=auto><p>Minnesteinen</p>'); // Bind a popup to the marker
 
 		minnesten.on('mouseover', function (e) { // Add an event listener for the 'mouseover' event
@@ -80,7 +80,7 @@ var steder = new Array(//elementene er : oppslagstekst, breddegrad, lengdegrad, 
 			this.closePopup(); // Close the popup
 			});
 /*
-			["<strong>Minnesteinen</strong>",60.22592,11.11318,"green","black",300,400,"src/images/minnestein.jpg",
+			["<strong>Minnesteinen</strong>",60.22592,11.11318,"green","black",300,400,"src/images/minnestein.jpg"],
 			["<strong>Vekatosøkket</strong><br>(Fastpunkt)",60.2318,11.1156]
 			//["<strong>Stridsvognvrak</strong><br>(tilnærmet lokalitet)",60.21901, 11.10532],
 			//["<strong>Tankskytebanen</strong><br> (fastpunkt)",60.22068, 11.11702]
@@ -96,7 +96,18 @@ var startend = [
     [60.22209, 11.10569]
 ];
 var flystripe = L.polyline(startend, {color: 'gray'}).addTo(map);
-var parkering = L.marker([60.22694,11.11096], {icon: ParkeringIcon}).addTo(map);
+
+var pIcon = L.icon({
+    iconUrl: 'src/images/P-tegn.png',
+    iconSize: [32, 32],
+    iconAnchor: [16, 32]
+});
+
+var parkering = L.marker(
+    [60.22694,11.11096],
+    { icon: pIcon }
+).addTo(map);
+
 var trasepunkter =[
 	[60.22694,11.11096],
 	[60.2267539,11.111413],
@@ -105,11 +116,25 @@ var trasepunkter =[
 	[60.2263294,11.1116307],
 	[60.2261995,11.1115949],
 	[60.2261115,11.1114952],
-	[60.2258926,11.1110731],
+	[60.2258258,11.1109317],
+	[60.2257889,11.1110929],
+	[60.2257994,11.1118295],
 	[60.2258635,11.113],
 	[60.22592,11.11318]
 	];
-var trase = L.polyline(trasepunkter, {color: 'red',opacity: 0.3, smoothFactor: 0, dashArray: "10 10" }).addTo(map);
+//var trase = L.polyline(trasepunkter, {color: 'red',opacity: 1, weight: 5,smoothFactor: 0, dashArray: "10 10" }).addTo(map);
+
+
+var trase = L.polyline(trasepunkter, {
+    color: 'red',
+	opacity: 0.3,
+}).addTo(map);
+
+console.log("Etter polyline");
+
+map.fitBounds(trase.getBounds());
+console.log(trase.getBounds());
+
 		</script>
 <script>
 // Create a new control to hold the image
