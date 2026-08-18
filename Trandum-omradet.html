@@ -1,8 +1,9 @@
+
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
         <title>Trandum/Aursletta</title>
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 		<link rel="stylesheet" href="src/leaflet_awesome_number_markers.css" />
@@ -32,10 +33,10 @@ var esriSat = L.tileLayer(
     }
 );
 var map = L.map('map', {
-    center: [60.23, 11.11],
-    zoom: 14,
-    layers: [topo]
+    center: [60.21, 11.114],
+    zoom: 13,
 });
+topo.addTo(map);
 
 var baseMaps = {
     "Topografisk": topo,
@@ -59,7 +60,8 @@ var steder = new Array(//elementene er : oppslagstekst, breddegrad, lengdegrad, 
 			["<strong>Grana</strong><br> (største grana anno 1970)",60.22962, 11.10792],
 			["<strong>Hoppetårnet</strong>",60.21341, 11.11413],
 			["<strong>Skolebygningen</strong></br>Trandum leir",60.2111,11.12539,"green"],
-			["<strong>Veteranhuset</strong></br>Trandum leir",60.2098593,11.1310127,"green"]
+			["<strong>Veteranhuset</strong></br>Trandum leir",60.2098593,11.1310127,"green",,"Veteranhuset.png"],
+			["<strong>Garder kurs</strong><br>og konferansesenter",60.1916300,11.0630399,"green",,"Garder.png"]
 			)
 for (j = 1; j < steder.length; j++) {
     var sted = L.marker([steder[j][1], steder[j][2]], {
@@ -134,7 +136,7 @@ var trase = L.polyline(trasepunkter, {
 	opacity: 0.3,
 }).addTo(map);
 
-map.fitBounds(trase.getBounds());
+//map.fitBounds(trase.getBounds());
 
 </script>
 <script>
