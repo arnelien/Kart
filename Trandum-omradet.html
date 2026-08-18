@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -50,47 +49,51 @@ L.control.layers(baseMaps).addTo(map);
 		<script>
 
 
-var steder = new Array(//elementene er : oppslagstekst, breddegrad, lengdegrad, evnt markørfarge, tallfarge
+var steder = new Array(//elementene er : oppslagstekst, breddegrad, lengdegrad, evnt markørfarge, tallfarge,bilde
 			["tom",0.0,0.0,"tom"],//lar index 0 være tom, for enkelhets skyld i formler
 			["<strong>Pit´n </strong><br>anno 1970",60.22727,11.10976,"black","black"],
-			["<strong>Samlingspunkt</strong><br>Minnesteinen",60.22589,11.11318],
+			["<strong>Samlingspunkt</strong><br>Minnesteinen",60.22589,11.11318,,,"minnestein.jpg"],
 			["<strong>Flystripa</strong><br>(Start NØ)",60.22585,11.11483],
 			["<strong>Flystripa</strong><br>(Enden SV)",60.22209, 11.10569],
 			["<strong>Minnebauta</strong><br>Trandumskogen",60.21892,11.11799,,],
 			["<strong>Grana</strong><br> (største grana anno 1970)",60.22962, 11.10792],
 			["<strong>Hoppetårnet</strong>",60.21341, 11.11413],
 			["<strong>Skolebygningen</strong></br>Trandum leir",60.2111,11.12539,"green"],
-			["<strong>Veteranhuset</strong></br>Trandum leir",60.2098593,11.1310127,"green"],
-			//["<strong>Vekatosøkket</strong><br>(Fastpunkt)",60.2318,11.1156],
-			//["<strong>Stridsvognvrak</strong><br>(tilnærmet lokalitet)",60.21901, 11.10532],
-			//["<strong>Tankskytebanen</strong><br> (fastpunkt)",60.22068, 11.11702]
+			["<strong>Veteranhuset</strong></br>Trandum leir",60.2098593,11.1310127,"green"]
 			)
-		for (j=1;j<steder.length;j++){
-		var sted = L.marker([steder[j][1], steder[j][2]], {icon: new L.AwesomeNumberMarkers({number: j, markerColor: steder[j][3] })}).addTo(map);
-		sted.bindPopup(steder[j][0]);
-		}
-		var minnesten =  L.marker([60.22592,11.11318], {icon: new L.AwesomeNumberMarkers({markerColor: "green" })}).addTo(map);
-		minnesten.bindPopup('<img src="src/images/minnestein.jpg" width="300" height=auto><p>Minnesteinen</p>'); // Bind a popup to the marker
+for (j = 1; j < steder.length; j++) {
+    var sted = L.marker([steder[j][1], steder[j][2]], {
+        icon: new L.AwesomeNumberMarkers({ number: j, markerColor: steder[j][3] })
+    }).addTo(map);
 
-		minnesten.on('mouseover', function (e) { // Add an event listener for the 'mouseover' event
-			this.openPopup(); // Open the popup
-			});
-	
-		minnesten.on('mouseout', function (e) { // Add an event listener for the 'mouseout' event
-			this.closePopup(); // Close the popup
-			});
+    // 1. Hent ut råverdien først for å sjekke om bildefilen faktisk eksisterer
+    var bildeNavn = steder[j][5];
+
+    // 2. Sjekk om bildefilen er gyldig (ikke tom, ikke null, ikke "undefined")
+    if (bildeNavn && bildeNavn !== "undefined" && bildeNavn !== "") {
+        // Bygg den fulle filbanen kun når vi vet bildet finnes
+        var bildeSti = "src/images/" + bildeNavn;
+
+        // Popup med bilde og stor ramme
+        sted.bindPopup(`
+            <img src="${bildeSti}" alt="Image" width="500" style="height:auto; display:block;">
+            <p>${steder[j][0]}</p>
+        `, { maxWidth: 550 });
+    } else {
+        // Popup uten bilde og med standard liten ramme
+        sted.bindPopup(`<p>${steder[j][0]}</p>`);
+    }
+}
+
+
 /*
-			["<strong>Minnesteinen</strong>",60.22592,11.11318,"green","black",300,400,"src/images/minnestein.jpg"],
 			["<strong>Vekatosøkket</strong><br>(Fastpunkt)",60.2318,11.1156]
 			//["<strong>Stridsvognvrak</strong><br>(tilnærmet lokalitet)",60.21901, 11.10532],
 			//["<strong>Tankskytebanen</strong><br> (fastpunkt)",60.22068, 11.11702]
 			)
-		for (j=1;j<steder.length;j++){
-		var sted = L.marker([steder[j][1], steder[j][2]], {icon: new L.AwesomeNumberMarkers({number: j, markerColor: steder[j][3],numberColor: steder[j][4] })}).addTo(map);
-	//	sted.bindPopup('<img src=steder[j][7]) with=([j][7]) height=auto><p>steder[j][0]</p>');
-		}
+
 */			
-// make polyline from an array of LatLng points
+// make polyline from an array of LatLng points (flystripa)
 var startend = [
     [60.22585,11.11483],
     [60.22209, 11.10569]
@@ -108,6 +111,7 @@ var parkering = L.marker(
     { icon: pIcon }
 ).addTo(map);
 
+//Definer punkter på ruta mellom parkering og minnestedet
 var trasepunkter =[
 	[60.22694,11.11096],
 	[60.2267539,11.111413],
@@ -130,12 +134,9 @@ var trase = L.polyline(trasepunkter, {
 	opacity: 0.3,
 }).addTo(map);
 
-console.log("Etter polyline");
-
 map.fitBounds(trase.getBounds());
-console.log(trase.getBounds());
 
-		</script>
+</script>
 <script>
 // Create a new control to hold the image
 var imageControl = L.control({position: 'bottomright'});
